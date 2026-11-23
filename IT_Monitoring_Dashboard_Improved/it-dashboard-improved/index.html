@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Company IT Dashboard</title>
+
+<link rel="stylesheet" href="styles.css">
+
+
+</head>
+
+<body>
+    
+
+<!-- ================================
+     SIDEBAR
+================================= -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-header">
+        <div class="logo">IT</div>
+
+        <div class="company-info">
+            <h1>Company IT</h1>
+            <span>Administration</span>
+        </div>
+    </div>
+
+
+    <nav class="navigation">
+
+        <div class="nav-section">
+            <span class="nav-title">MAIN</span>
+
+            <a href="#dashboard" class="nav-link active" data-page="dashboard">
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#employees" class="nav-link" data-page="employees">
+                <span class="nav-icon">♙</span>
+                <span>Employees</span>
+            </a>
+
+            <a href="#departments" class="nav-link" data-page="departments">
+                <span class="nav-icon">▤</span>
+                <span>Departments</span>
+            </a>
+        </div>
+
+
+        <div class="nav-section">
+            <span class="nav-title">INFRASTRUCTURE</span>
+
+            <a href="#servers" class="nav-link" data-page="servers">
+                <span class="nav-icon">▣</span>
+                <span>Servers</span>
+            </a>
+
+            <a href="#services" class="nav-link" data-page="services">
+                <span class="nav-icon">⚙</span>
+                <span>Services</span>
+            </a>
+
+            <a href="#security" class="nav-link" data-page="security">
+                <span class="nav-icon">◇</span>
+                <span>Security</span>
+            </a>
+
+            <a href="#backups" class="nav-link" data-page="backups">
+                <span class="nav-icon">↻</span>
+                <span>Backups</span>
+            </a>
+        </div>
+
+
+        <div class="nav-section">
+            <span class="nav-title">OPERATIONS</span>
+
+            <a href="#alerts" class="nav-link" data-page="alerts">
+                <span class="nav-icon">!</span>
+                <span>Alerts</span>
+                <span class="notification-count" id="alert-count">0</span>
+            </a>
+
+            <a href="#tickets" class="nav-link" data-page="tickets">
+                <span class="nav-icon">□</span>
+                <span>Help Desk</span>
+            </a>
+        </div>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <a href="#settings" class="nav-link" data-page="settings">
+            <span class="nav-icon">⚙</span>
+            <span>Settings</span>
+        </a>
+
+        <div class="server-indicator" id="sidebar-server-indicator">
+            <span class="status-dot online"></span>
+
+            <div>
+                <strong id="sidebar-status">Checking connection</strong>
+                <small>Company Server</small>
+            </div>
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- ================================
+     MAIN CONTENT
+================================= -->
+
+<main class="main-content">
+
+    <!-- TOP HEADER -->
+
+    <header class="topbar">
+
+        <div class="page-heading">
+            <span class="breadcrumb">Company IT /</span>
+            <h2 id="page-title">Dashboard</h2>
+        </div>
+
+
+        <div class="topbar-actions">
+
+            <!-- Alert button -->
+
+            <button class="icon-button" id="alert-button" aria-label="Notifications">
+                <span>♢</span>
+                <span class="alert-indicator"></span>
+            </button>
+
+
+            <!-- Admin profile -->
+
+            <button class="admin-profile" id="profile-button">
+
+                <div class="avatar">
+                    A
+                </div>
+
+                <div class="admin-details">
+                    <strong>Admin</strong>
+                    <span>IT Administrator</span>
+                </div>
+
+                <span class="profile-arrow">⌄</span>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================
+         PAGE CONTAINER
+    ================================= -->
+
+    <div class="page-container">
+        <p id="connection-banner" role="status" aria-live="polite" class="connection-banner">Connecting to the monitoring API…</p>
+
+
+        <!-- ============================
+             DASHBOARD PAGE
+        ============================= -->
+
+        <section class="page active-page" id="dashboard-page">
+
+
+            <!-- Welcome -->
+
+            <div class="welcome-section">
+
+                <div>
+                    <span class="eyebrow">SYSTEM OVERVIEW</span>
+
+                    <h1>Good afternoon, Admin</h1>
+
+                    <p>
+                        Live metrics from this machine. Other management panels are planned features.
+                    </p>
+                </div>
+
+                <button class="primary-button" id="refresh-button">
+                    ↻ Refresh Data
+                </button>
+
+            </div>
+
+
+            <!-- SYSTEM STATUS -->
+
+            <div class="stats-grid">
+
+
+                <!-- CPU -->
+
+                <article class="stat-card">
+
+                    <div class="stat-header">
+                        <span>CPU Usage</span>
+                        <span class="stat-icon">◉</span>
+                    </div>
+
+                    <div class="stat-value">
+                        <strong id="cpu-value">—</strong>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="cpu-progress"></div>
+                    </div>
+
+                    <div class="stat-footer">
+                        <span>Live server metrics</span>
+                        <span class="positive">Normal</span>
+                    </div>
+
+                </article>
+
+
+                <!-- RAM -->
+
+                <article class="stat-card">
+
+                    <div class="stat-header">
+                        <span>Memory Usage</span>
+                        <span class="stat-icon">▤</span>
+                    </div>
+
+                    <div class="stat-value">
+                        <strong id="memory-value">—</strong>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="memory-progress"></div>
+                    </div>
+
+                    <div class="stat-footer">
+                        <span>Live server metrics</span>
+                        <span class="positive">Normal</span>
+                    </div>
+
+                </article>
+
+
+                <!-- DISK -->
+
+                <article class="stat-card">
+
+                    <div class="stat-header">
+                        <span>Disk Usage</span>
+                        <span class="stat-icon">▰</span>
+                    </div>
+
+                    <div class="stat-value">
+                        <strong id="disk-value">—</strong>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="disk-progress"></div>
+                    </div>
+
+                    <div class="stat-footer">
+                        <span>Live server metrics</span>
+                        <span class="positive">Healthy</span>
+                    </div>
+
+                </article>
+
+
+                <!-- UPTIME -->
+
+                <article class="stat-card">
+
+                    <div class="stat-header">
+                        <span>Server Uptime</span>
+                        <span class="stat-icon">◷</span>
+                    </div>
+
+                    <div class="stat-value">
+                        <strong id="uptime-value">—</strong>
+                    </div>
+
+                    <div class="stat-footer uptime-footer">
+                        <span>Last reboot</span>
+                        <span>Live server metrics</span>
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- MAIN DASHBOARD GRID -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- SERVER HEALTH -->
+
+                <article class="dashboard-card server-health">
+
+                    <div class="card-header">
+
+                        <div>
+                            <span class="card-eyebrow">INFRASTRUCTURE</span>
+                            <h3>Server Health</h3>
+                        </div>
+
+                        <span class="status-badge success" id="server-status-dot">
+                            <span class="status-dot"></span>
+                            Operational
+                        </span>
+
+                    </div>
+
+
+                    <div class="server-information">
+
+                        <div class="server-row">
+                            <span>Hostname</span>
+                            <strong id="hostname-value">Awaiting connection</strong>
+                        </div>
+
+                        <div class="server-row">
+                            <span>Operating System</span>
+                            <strong id="operating-system-value">Awaiting connection</strong>
+                        </div>
+
+                        <div class="server-row">
+                            <span>Server Status</span>
+                            <strong class="status-text-success" id="server-status-value">
+                                ● Checking
+                            </strong>
+                        </div>
+
+                        <div class="server-row">
+                            <span>SSH</span>
+                            <strong class="status-text-success" id="ssh-status-value">
+                                ● Unknown
+                            </strong>
+                        </div>
+
+                        <div class="server-row">
+                            <span>Nginx</span>
+                            <strong class="status-text-success" id="nginx-status-value">
+                                ● Unknown
+                            </strong>
+                        </div>
+
+                        <div class="server-row">
+                            <span>Firewall</span>
+                            <strong class="status-text-success" id="firewall-status-value">
+                                ● Unknown
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ALERTS -->
+
+                <article class="dashboard-card recent-alerts">
+
+                    <div class="card-header">
+
+                        <div>
+                            <span class="card-eyebrow">MONITORING</span>
+                            <h3>Recent Alerts</h3>
+                        </div>
+
+                        <a href="#alerts" data-view-page="alerts" class="view-link">
+                            View all →
+                        </a>
+
+                    </div>
+
+
+                    <div class="alert-list">
+                        <p>Loading current alerts…</p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- EMPLOYEES -->
+                <!-- Sample UI content below, not connected to the API -->
+
+                <article class="dashboard-card employees-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <span class="card-eyebrow">DIRECTORY</span>
+                            <h3>Employees</h3>
+                        </div>
+
+                        <a href="#employees" data-view-page="employees" class="view-link">
+                            View →
+                        </a>
+
+                    </div>
+
+
+                    <p class="feature-note">Employee directory is not configured. This is a planned module, not live company data.</p>
+
+                </article>
+
+
+                <!-- SERVICES -->
+
+                <article class="dashboard-card services-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <span class="card-eyebrow">SERVICES</span>
+                            <h3>System Services</h3>
+                        </div>
+
+                        <a href="#services" data-view-page="services" class="view-link">
+                            View →
+                        </a>
+
+                    </div>
+
+
+                    <div class="service-list" id="dashboard-services"><p>Checking local services…</p></div>
+
+                </article>
+
+            </div>
+
+
+            <!-- NOTIFICATION STATUS -->
+
+            <article class="dashboard-card notification-status-card">
+
+                <div class="card-header">
+
+                    <div>
+                        <span class="card-eyebrow">ALERTING</span>
+                        <h3>Notification Channels</h3>
+                    </div>
+
+                    <a href="#alerts" data-view-page="alerts" class="view-link">
+                        View alerts →
+                    </a>
+
+                </div>
+
+
+                <p class="feature-note">Email, IFTTT, push and SMS notification integrations are not configured. Threshold alerts are displayed inside the dashboard only.</p>
+
+            </article>
+
+
+        </section>
+
+
+        <!-- ============================
+             OTHER PAGES
+        ============================= -->
+
+        <section class="page" id="employees-page">
+            <div class="page-placeholder">
+                <span class="eyebrow">DIRECTORY</span>
+                <h1>Employees</h1>
+                <p>Employee management will be built here.</p>
+            </div>
+        </section>
+
+
+        <section class="page" id="departments-page">
+            <div class="page-placeholder">
+                <span class="eyebrow">ORGANIZATION</span>
+                <h1>Departments</h1>
+                <p>Department management will be built here.</p>
+            </div>
+        </section>
+
+
+        <section class="page" id="servers-page">
+            <div class="page-placeholder">
+                <span class="eyebrow">INFRASTRUCTURE</span>
+                <h1>Monitored Server</h1>
+                <p>This installation monitors its host. Multi-server management is planned.</p>
+                <div id="server-details"></div>
+            </div>
+        </section>
+
+
+        <section class="page" id="services-page">
+            <div class="page-placeholder">
+                <span class="eyebrow">INFRASTRUCTURE</span>
+                <h1>Service Status</h1>
+                <p>Read-only local service inspection, when available.</p>
+                <div id="service-details"></div>
+            </div>
+        </section>
+
+
+        <section class="page" id="security-page">
+            <div class="page-placeholder">
+                <span class="eyebrow">SECURITY</span>
+                <h1>Security</h1>
+                <p>Security monitoring will be built here.</p>
+            </div>
+        </section>
+
+
+        <section class="page" id="backups-page">
+            <div class="page-placeholder">
+                <span class="eyebrow">DATA PROTECTION</span>
+                <h1>Backups</h1>
+                <p>Backup management will be built here.</p>
+            </div>
+        </section>
+
+
+        <section class="page" id="alerts-page">
+            <div class="page-placeholder">
+                <span class="eyebrow">MONITORING</span>
+                <h1>Current Alerts</h1>
+                <p>Generated from current CPU, memory and disk thresholds, not historical events.</p>
+                <div id="all-alerts" class="alert-list"></div>
+            </div>
+        </section>
+
+
+        <section class="page" id="tickets-page">
+            <div class="page-placeholder">
+                <span class="eyebrow">IT SUPPORT</span>
+                <h1>Help Desk</h1>
+                <p>Help desk tickets will be built here.</p>
+            </div>
+        </section>
+
+
+        <section class="page" id="settings-page">
+            <div class="page-placeholder">
+                <span class="eyebrow">SYSTEM</span>
+                <h1>Settings</h1>
+                <p>System settings will be built here.</p>
+            </div>
+        </section>
+
+
+    </div>
+
+</main>
+
+
+<!-- JavaScript -->
+
+<script src="dashboard.js"></script>
+
+
+</body>
+</html>

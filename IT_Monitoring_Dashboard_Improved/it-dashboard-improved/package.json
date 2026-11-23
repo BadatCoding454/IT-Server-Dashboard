@@ -1,0 +1,13 @@
+{
+  "name": "linux-it-monitoring-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Read-only Linux and cross-platform system monitoring dashboard",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
